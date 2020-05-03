@@ -147,7 +147,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Ray Tracing in a Weekend\Ray Tracing The Next Week.cpp" />
     <ClCompile Include="Ray Tracing The Next Week.cpp" />
   </ItemGroup>
   <ItemGroup>

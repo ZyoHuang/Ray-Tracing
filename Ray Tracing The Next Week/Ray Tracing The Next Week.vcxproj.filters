@@ -18,9 +18,6 @@
     <ClCompile Include="Ray Tracing The Next Week.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Ray Tracing in a Weekend\Ray Tracing The Next Week.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Ray Tracing in a Weekend\camera.h">
