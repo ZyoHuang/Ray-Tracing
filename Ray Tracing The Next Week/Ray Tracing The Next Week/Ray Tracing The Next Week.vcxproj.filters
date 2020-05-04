@@ -20,37 +20,40 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Ray Tracing in a Weekend\camera.h">
+    <ClInclude Include="camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Ray Tracing in a Weekend\dielectric.h">
+    <ClInclude Include="dielectric.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Ray Tracing in a Weekend\hittable.h">
+    <ClInclude Include="hittable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Ray Tracing in a Weekend\hittable_list.h">
+    <ClInclude Include="hittable_list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Ray Tracing in a Weekend\lambertian.h">
+    <ClInclude Include="lambertian.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Ray Tracing in a Weekend\material.h">
+    <ClInclude Include="material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Ray Tracing in a Weekend\metal.h">
+    <ClInclude Include="metal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Ray Tracing in a Weekend\ray.h">
+    <ClInclude Include="ray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Ray Tracing in a Weekend\Sphere.h">
+    <ClInclude Include="Sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Ray Tracing in a Weekend\Utility.h">
+    <ClInclude Include="Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Ray Tracing in a Weekend\vec3.h">
+    <ClInclude Include="vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="moving_sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

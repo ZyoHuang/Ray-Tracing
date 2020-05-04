@@ -10,6 +10,7 @@
 #include "metal.h"
 #include "lambertian.h"
 #include "dielectric.h"
+#include "moving_sphere.h"
 const int image_width = 600;
 const int image_height = 400;
 const int samples_per_pixel = 200;
@@ -33,8 +34,8 @@ hittable_list random_scene() {
         vec3(0, -1000, 0), 1000, make_shared<lambertian>(vec3(0.5, 0.5, 0.5))));
 
     int i = 1;
-    for (int a = -11; a < 11; a++) {
-        for (int b = -11; b < 11; b++) {
+    for (int a = -10; a < 10; a++) {
+        for (int b = -10; b < 10; b++) {
             auto choose_mat = random_double();
             vec3 center(a + 0.9 * random_double(), 0.2, b + 0.9 * random_double());
             if ((center - vec3(4, 0.2, 0)).length() > 0.9) {
@@ -42,7 +43,7 @@ hittable_list random_scene() {
                     // diffuse
                     auto albedo = random_vec3() * random_vec3();
                     world.add(
-                        make_shared<sphere>(center, 0.2, make_shared<lambertian>(albedo)));
+                        make_shared<moving_sphere>(center, center + vec3(0, random_double(0, .5), 0), 0.0, 1.0, 0.2, make_shared<lambertian>(albedo)));
                 }
                 else if (choose_mat < 0.95) {
                     // metal
@@ -106,11 +107,11 @@ int main()
                     vec3 lookat = vec3(0, 0, 0);
                     vec3 vup = vec3(0.0, 1.0, 0.0);
                     double fov = 20;
-                    double aperture = 0.1;
+                    double aperture = 0.0;
                     double focusDist = 10.0;
                     camera cam(lookfrom, lookat, vup,
                         fov, image_width, image_height,
-                        aperture, focusDist);
+                        aperture, focusDist,0.0,1.0);
                     ray r = cam.getRay(u, v);
                     color += ray_color(r, world, max_depth);
                 }

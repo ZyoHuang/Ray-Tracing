@@ -6,8 +6,9 @@ class camera {
 public:
 	camera(const vec3& look_from,const vec3& look_at,const vec3& vup,
 		double vert_fov,int img_width,int img_height,
-		double aperture,double focus_dist
-	):	origin(look_from),lens_radius(aperture/2) {
+		double aperture,double focus_dist,
+		double t0,double t1
+	):	origin(look_from),lens_radius(aperture/2),time0(t0),time1(t1) {
 		double theta = degrees_to_radians(vert_fov);
 		double half_height = tan(theta / 2) * focus_dist;//half_height = tan(theta/2)*dist
 		double half_width = static_cast<double>(img_width) / img_height * half_height;
@@ -21,7 +22,7 @@ public:
 	ray getRay(double x,double y) {
 		vec3 cd = lens_radius * random_in_unit_disk();
 		vec3 offset = u * cd.x() + v * cd.y();
-		return ray(origin + offset, lower_left_corner + x * horizontal + y * vertical - (origin + offset));
+		return ray(origin + offset, lower_left_corner + x * horizontal + y * vertical - (origin + offset),random_double(time0,time1));
 	}
 private:
 	double lens_radius;
@@ -30,6 +31,7 @@ private:
 	vec3 horizontal;
 	vec3 vertical;
 	vec3 lower_left_corner;
+	double time0, time1;
 };
 #endif // !CAMERA_H
 
