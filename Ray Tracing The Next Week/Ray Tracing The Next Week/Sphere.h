@@ -8,6 +8,7 @@ public:
 	sphere(){}
 	sphere(const vec3& ctr, double r,shared_ptr<material> m) :center(ctr),radius(r),mat_ptr(m){}
 	virtual bool hit(const ray& r, double t_min, double t_max, hit_recored& rec)const;
+	virtual bool bounding_box(AABB& aabb, double t1 = 0.0, double t2 = 0.0)const;
 private:
 	vec3 center;
 	double radius;
@@ -41,7 +42,10 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_recored& rec)cons
 	}
 	return false;
 }
-
+bool sphere::bounding_box(AABB& output_aabb, double t1 = 0.0, double t2 = 0.0)const {
+	output_aabb = AABB(center - vec3(radius, radius, radius), center + vec3(radius, radius, radius));
+	return true;
+}
 vec3 random_in_unit_sphere() {
 	while (true)
 	{

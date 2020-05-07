@@ -2,6 +2,7 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 #include "ray.h"
+#include "AABB.h"
 class material;
 struct hit_recored
 {
@@ -18,6 +19,7 @@ struct hit_recored
 class hittable {
 public:
 	virtual bool hit(const ray& r, double t_min, double t_max, hit_recored& rec)const = 0;
+	virtual bool bounding_box(AABB& output_aabb, double t1 = 0.0, double t2 = 0.0)const = 0;
 };
 #endif // !HITTABLE_H
 

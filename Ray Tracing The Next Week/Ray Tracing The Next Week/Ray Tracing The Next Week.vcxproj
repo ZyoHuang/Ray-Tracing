@@ -150,6 +150,8 @@
     <ClCompile Include="Ray Tracing The Next Week.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
+    <ClInclude Include="BVH.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="dielectric.h" />
     <ClInclude Include="hittable.h" />

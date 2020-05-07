@@ -8,6 +8,7 @@ public:
 	moving_sphere(const vec3& ctr0,const vec3& ctr1,double tm0,double tm1, double r, shared_ptr<material> m) 
 		:center0(ctr0), center1(ctr1), radius(r), mat_ptr(m),time0(tm0),time1(tm1) {}
 	virtual bool hit(const ray& r, double t_min, double t_max, hit_recored& rec)const;
+	virtual bool bounding_box(AABB& aabb, double t1 = 0.0, double t2 = 0.0)const;
 	vec3 center(double time)const;
 private:
 	vec3 center0,center1;
@@ -16,9 +17,11 @@ private:
 	double radius;
 
 };
+
 vec3 moving_sphere::center(double time)const {
 	return center0 + (time - time0) / (time1 - time0) * (center1 - center0);
 }
+
 bool moving_sphere::hit(const ray& r, double t_min, double t_max, hit_recored& rec)const {
 	auto a = r.direction().length_squared();
 	auto half_b = dot(r.direction(), r.origin() - center(r.time()));
@@ -48,6 +51,11 @@ bool moving_sphere::hit(const ray& r, double t_min, double t_max, hit_recored& r
 	return false;
 }
 
-
+bool moving_sphere::bounding_box(AABB& output_aabb, double t1 = 0.0, double t2 = 0.0)const {
+	AABB box0(center0 - vec3(radius, radius, radius), center0 + vec3(radius, radius, radius));
+	AABB box1(center1 - vec3(radius, radius, radius), center1 + vec3(radius, radius, radius));
+	output_aabb = surrounding_box(box0, box1);
+	return true;
+}
 #endif // !MOVING_SPHERE_H
 

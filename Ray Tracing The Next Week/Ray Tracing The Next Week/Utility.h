@@ -30,8 +30,17 @@ inline double random_double() {//returns a random real in [0,1)
 	//	std::bind(distribution, generator);
 	//return rand_generator();
 }
+
 inline double random_double(double min, double max) {
 	return min + (max - min) * random_double();
+}
+
+inline int random_int() {
+	return rand() % 2;
+}
+
+inline int random_int(int min, int max) {
+	return min + (max - min) * (rand() / (RAND_MAX + 0.0));
 }
 
 inline double clamp(double x, double min, double max) {

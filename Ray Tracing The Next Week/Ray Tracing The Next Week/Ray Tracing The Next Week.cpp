@@ -11,6 +11,7 @@
 #include "lambertian.h"
 #include "dielectric.h"
 #include "moving_sphere.h"
+#include "BVH.h"
 const int image_width = 600;
 const int image_height = 400;
 const int samples_per_pixel = 200;
@@ -68,7 +69,7 @@ hittable_list random_scene() {
     world.add(
         make_shared<sphere>(vec3(4, 1, 0), 1.0, make_shared<metal>(vec3(0.7, 0.6, 0.5), 0.0)));
 
-    return world;
+    return static_cast<hittable_list>(make_shared<BVH_Node>(world,0,1));
 }
 vec3 ray_color(const ray& r, const hittable& world, int depth) {
     hit_recored rec;
