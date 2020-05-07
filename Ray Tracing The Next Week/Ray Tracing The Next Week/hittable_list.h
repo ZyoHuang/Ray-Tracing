@@ -14,7 +14,7 @@ public:
 	void clear() { objs.clear(); }
 	void add(shared_ptr<hittable> obj) { objs.push_back(obj); }
 	virtual bool hit(const ray& r, double t_min, double t_max, hit_recored& rec)const;
-	virtual bool bounding_box(AABB& output_aabb, double t1 = 0.0, double t2 = 0.0)const;
+	virtual bool bounding_box(AABB& output_aabb, double t1, double t2)const;
 private:
 	std::vector<shared_ptr<hittable>> objs;
 };
@@ -34,8 +34,8 @@ bool hittable_list::hit(const ray& r, double t_min, double t_max, hit_recored& r
 	return hit_anything;
 }
 
-bool hittable_list::bounding_box(AABB& output_aabb, double t1 = 0.0, double t2 = 0.0)const {
-	if (!objs.empty())return false;
+bool hittable_list::bounding_box(AABB& output_aabb, double t1 , double t2 )const {
+	if (objs.empty())return false;
 	bool firstBox = true;
 	AABB tmp_box;
 	for (const auto& obj : objs)

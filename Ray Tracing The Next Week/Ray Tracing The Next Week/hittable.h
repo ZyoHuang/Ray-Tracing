@@ -9,6 +9,7 @@ struct hit_recored
 	vec3 pt;
 	vec3 normal;
 	std::shared_ptr<material> mat_ptr;
+	double u, v;//纹理uv
 	double t;
 	bool front_face;//图元的正反面
 	inline void set_face_normal(const ray& r, const vec3& outward_normal) {
@@ -19,7 +20,7 @@ struct hit_recored
 class hittable {
 public:
 	virtual bool hit(const ray& r, double t_min, double t_max, hit_recored& rec)const = 0;
-	virtual bool bounding_box(AABB& output_aabb, double t1 = 0.0, double t2 = 0.0)const = 0;
+	virtual bool bounding_box(AABB& output_aabb, double t1, double t2)const = 0;
 };
 #endif // !HITTABLE_H
 

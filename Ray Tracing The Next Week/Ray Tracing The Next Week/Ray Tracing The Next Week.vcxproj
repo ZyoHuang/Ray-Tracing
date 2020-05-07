@@ -162,6 +162,7 @@
     <ClInclude Include="moving_sphere.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="vec3.h" />
   </ItemGroup>
