@@ -52,6 +52,9 @@ private:
 	double e[3];
 };
 
+using color = vec3;
+using Point3 = vec3;
+
 inline std::ostream& operator<<(std::ostream& os, const vec3& v) {
 	auto r = sqrt(v[0]);//gamma correct
 	auto g = sqrt(v[1]);
@@ -71,7 +74,7 @@ inline vec3 operator-(const vec3& v1, const vec3& v2) {
 	return vec3(v1[0] - v2[0], v1[1] - v2[1], v1[2] - v2[2]);
 }
 
-inline vec3 operator*(const vec3& v1, const vec3& v2) {
+inline vec3 operator*(const vec3& v1, const vec3& v2) {//数乘，而非点乘
 	return vec3(v1[0] * v2[0], v1[1] * v2[1], v1[2] * v2[2]);
 }
 
@@ -135,4 +138,7 @@ inline vec3 refract(const vec3& v_in, const vec3& nor,double etaI_over_etaO) {
 	auto r_out_perp = -sqrt(abs(1.0 - r_out_parallel.length_squared())) * nor;
 	return r_out_parallel + r_out_perp;
 }
+
+
+
 #endif // !VEC3_H

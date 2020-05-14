@@ -2,7 +2,7 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 #include "vec3.h"
-using color = vec3;
+#include "perlin.h"
 class texture {
 public:
 	virtual color value(double u, double v, const vec3& p)const = 0;
@@ -34,6 +34,18 @@ public:
 private:
 	shared_ptr<texture> _odd_tex;
 	shared_ptr<texture> _even_tex;
+};
+
+class noise_texture :public texture {
+public:
+	noise_texture() = default;
+	noise_texture(double scale):_scale(scale){}
+	virtual color value(double u, double v, const vec3& p)const {
+		return color(1, 1, 1) * 0.5 * (sin(_scale*p.y()+10*noise.turb(p)) + 1.0);
+	}
+private:
+	perlin noise;
+	double _scale;//‘Î…˘∆µ¬ 
 };
 #endif // !TEXTURE_H
 
