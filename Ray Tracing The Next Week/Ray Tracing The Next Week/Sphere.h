@@ -3,6 +3,7 @@
 #define SPHERE_H
 #include "hittable.h"
 #include "Utility.h"
+#include <cmath>
 class sphere:public hittable {
 public:
 	sphere(){}
@@ -54,6 +55,10 @@ vec3 random_in_unit_sphere() {
 			continue;
 		return random_p;
 	}
+}
+
+void get_sphere_uv(const vec3& p, double& u, double& v) {
+	auto phi = atan2(p.z(), p.x());
 }
 #endif // !SPHERE_H
 

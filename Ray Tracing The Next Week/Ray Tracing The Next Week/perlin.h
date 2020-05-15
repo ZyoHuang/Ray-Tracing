@@ -29,9 +29,12 @@ public:
 		auto u = p.x() - floor(p.x());
 		auto v = p.y() - floor(p.y());
 		auto w = p.z() - floor(p.z());
-		u = u * u * (3 - 2 * u);//hermitian smoothing
-		v = v * v * (3 - 2 * v);
-		w = w * w * (3 - 2 * w);
+		//u = u * u * (3 - 2 * u);//hermitian smoothing
+		//v = v * v * (3 - 2 * v);
+		//w = w * w * (3 - 2 * w);
+		u = u * u * u * (6 * u * u - 15 * u + 10);
+		v = v * v * v * (6 * v * v - 15 * v + 10);
+		w = w * w * w * (6 * w * w - 15 * w + 10);
 		int i = floor(p.x());
 		int j = floor(p.y());
 		int k = floor(p.z());
@@ -88,9 +91,12 @@ private:
 	}
 
 	inline double perlin_interp(vec3 c[2][2][2], double u, double v, double w) const{
-		auto uu = u * u * (3 - 2 * u);
-		auto vv = v * v * (3 - 2 * v);
-		auto ww = w * w * (3 - 2 * w);
+		//auto uu = u * u * (3 - 2 * u);
+		//auto vv = v * v * (3 - 2 * v);
+		//auto ww = w * w * (3 - 2 * w);
+		auto uu = u * u * u * (6 * u * u - 15 * u + 10);
+		auto vv = v * v * v * (6 * v * v - 15 * v + 10);
+		auto ww = w * w * w * (6 * w * w - 15 * w + 10);
 		auto accum = 0.0;
 		for(int i = 0;i<2;i++)
 			for(int j = 0;j<2;j++)
