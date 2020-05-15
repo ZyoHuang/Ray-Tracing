@@ -47,9 +47,17 @@
 
 例如：像素坐标(i,j)在一个N~x~×N~y~的图片中对应的图像纹理坐标(u,v)应该为：
 
-![](http://latex.codecogs.com/gif.latex?\\u=\frac{i}{N_{x}-1})
+$$
+\begin{align*}
+u=\frac{i}{N_{x}-1}
+\end{align*}
+$$
 
-![](http://latex.codecogs.com/gif.latex?\\v=\frac{j}{N_{y}-1})
+$$
+\begin{align*}
+v=\frac{j}{N_{y}-1}
+\end{align*}
+$$
 
 所以需要在撞击点处收集uv信息。
 
