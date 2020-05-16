@@ -61,7 +61,50 @@ $$
 
 所以需要在撞击点处收集uv信息。
 
-<img src="img-bed/3ac79f3df8dcd100e059aca17a8b4710b8122f6c.png" alt="img" style="zoom:60%;" />
+在球坐标上，uv表示为：
+$$
+u = \frac{\phi}{2\pi}(\phi\in[0,2π])
+$$
+
+$$
+v = \frac{\theta}{\pi}(\theta\in[0,π])
+$$
+
+则u∈[0,1]，v∈[0,1]，此步骤为规格化。
 
 
+
+在球坐标上，可以用θ和φ表示(x,y,z)，θ∈[0,π]，φ∈[0,2π]，设r=1，则
+
+<img src="img-bed/fullsizerender.jpg" alt="fullsizerender" style="zoom:33%;" />
+$$
+x =  \cos(\theta)\cos(\phi)
+$$
+$$
+z =\cos(\theta) \sin(\phi)
+$$
+$$
+y=\sin{\theta}
+$$
+
+则
+$$
+\phi = \arctan{\frac{z}{x}}
+$$
+
+$$
+\theta = \arcsin{y}
+$$
+
+此时，φ∈[-π,π]，θ∈[-π/2,π/2]。因此计算uv的时候需要将其规格化，使u,v∈[0,1]。
+
+
+
+此外需要注意的是纹理坐标和图像坐标上关于v的映射，
+
+在texture coordinates上v映射到image coordinates应该为：
+$$
+v_{i}=1-clamp(v_{t},0.0,1.0)
+$$
+![](img-bed/fullsizerender(1).jpg)
 

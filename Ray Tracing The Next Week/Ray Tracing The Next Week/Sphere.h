@@ -4,6 +4,7 @@
 #include "hittable.h"
 #include "Utility.h"
 #include <cmath>
+void get_sphere_uv(const vec3& p, double& u, double& v);
 class sphere:public hittable {
 public:
 	sphere(){}
@@ -27,6 +28,7 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_recored& rec)cons
 			rec.pt = r.at(tmp);
 			auto outward_normal = (rec.pt - center)/radius;
 			rec.set_face_normal(r, outward_normal);
+			get_sphere_uv((rec.pt - center) / radius, rec.u, rec.v);
 			rec.mat_ptr = mat_ptr;
 			return true;
 		}
@@ -37,6 +39,7 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_recored& rec)cons
 			rec.normal = (rec.pt - center)/radius;
 			auto outward_normal = (rec.pt - center) / radius;
 			rec.set_face_normal(r, outward_normal);
+			get_sphere_uv((rec.pt - center) / radius, rec.u, rec.v);
 			rec.mat_ptr = mat_ptr;
 			return true;
 		}
@@ -58,7 +61,10 @@ vec3 random_in_unit_sphere() {
 }
 
 void get_sphere_uv(const vec3& p, double& u, double& v) {
-	auto phi = atan2(p.z(), p.x());
+	auto phi = atan2(p.z(), p.x());//取值范围[-Pi,Pi]
+	auto theta = asin(p.y());//取值范围[-Pi/2,Pi/2]
+	u = 1 - (phi + Pi) / (2 * Pi);//uv规格化[0,1]
+	v = (theta + Pi / 2) / Pi;
 }
 #endif // !SPHERE_H
 

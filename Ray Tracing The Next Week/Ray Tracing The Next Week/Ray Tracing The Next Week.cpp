@@ -32,8 +32,9 @@ double hit_sphere(const ray& r, const vec3& center, double radius) {
 hittable_list random_scene() {
     hittable_list world;
     auto perlin_texture = make_shared<noise_texture>(5.0);
+    auto earth_texture = make_shared<image_texture>("img-bed/earthmap.jpg");
     world.add(make_shared<sphere>(Point3(0, -1000, 0), 1000, make_shared<lambertian>(perlin_texture)));
-    world.add(make_shared<sphere>(Point3(0, 2, 0), 2, make_shared<lambertian>(perlin_texture)));
+    world.add(make_shared<sphere>(Point3(0, 2, 0), 2, make_shared<lambertian>(earth_texture)));
     return static_cast<hittable_list>(make_shared<BVH_Node>(world,0,1));
 }
 vec3 ray_color(const ray& r, const hittable& world, int depth) {
@@ -70,7 +71,7 @@ int main()
                     auto u = (j + random_double()) / image_width;
                     auto v = (i + random_double()) / image_height;
                     vec3 lookfrom = vec3(13, 2, 3);
-                    vec3 lookat = vec3(0, 0, 0);
+                    vec3 lookat = Point3(0, 2, 0);
                     vec3 vup = vec3(0.0, 1.0, 0.0);
                     double fov = 20;
                     double aperture = 0.0;
