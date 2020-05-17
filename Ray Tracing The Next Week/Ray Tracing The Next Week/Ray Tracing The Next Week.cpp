@@ -12,6 +12,7 @@
 #include "dielectric.h"
 #include "moving_sphere.h"
 #include "BVH.h"
+#include "aarect.h"
 const int image_width = 600;
 const int image_height = 400;
 const int samples_per_pixel = 200;
@@ -31,25 +32,30 @@ double hit_sphere(const ray& r, const vec3& center, double radius) {
 }
 hittable_list random_scene() {
     hittable_list world;
-    auto perlin_texture = make_shared<noise_texture>(5.0);
-    auto earth_texture = make_shared<image_texture>("img-bed/earthmap.jpg");
-    world.add(make_shared<sphere>(Point3(0, -1000, 0), 1000, make_shared<lambertian>(perlin_texture)));
-    world.add(make_shared<sphere>(Point3(0, 2, 0), 2, make_shared<lambertian>(earth_texture)));
+    auto red = make_shared<lambertian>(make_shared<solid_color>(.65, .05, .05));
+    auto white = make_shared<lambertian>(make_shared<solid_color>(.73, .73, .73));
+    auto green = make_shared<lambertian>(make_shared<solid_color>(.12, .45, .15));
+    auto light = make_shared<diffuse_light>(make_shared<solid_color>(15, 15, 15));
+    world.add(make_shared<YZ_Rect>(0, 555, 0, 555, 555, green));
+    world.add(make_shared<YZ_Rect>(0, 555, 0, 555, 0, red));
+    world.add(make_shared<XZ_Rect>(213, 343, 227, 332, 554, light));
+    world.add(make_shared<XZ_Rect>(0, 555, 0, 555, 0, white));
+    world.add(make_shared<XZ_Rect>(0, 555, 0, 555, 555, white));
+    world.add(make_shared<XY_Rect>(0, 555, 0, 555, 555, white));
     return static_cast<hittable_list>(make_shared<BVH_Node>(world,0,1));
 }
-vec3 ray_color(const ray& r, const hittable& world, int depth) {
+vec3 ray_color(const ray& r,const Color& background, const hittable& world, int depth) {
     hit_recored rec;
     if (depth <= 0)
-        return vec3(0.0, 0.0, 0.0);
-    if (world.hit(r, 0.001, infinity, rec)) {
-        ray scattered;
-        vec3 attenuation;
-        if (rec.mat_ptr->scatter(r, rec, attenuation, scattered))
-            return attenuation * (ray_color(scattered, world, --depth));
-    }
-    vec3 unit_direction = unit_vector(r.direction());
-    auto t = 0.5 * (unit_direction.y() + 1.0);
-    return t * vec3(0.5, 0.7, 1.0) + (1 - t) * vec3(1.0, 1.0, 1.0);
+        return Color(0.0, 0.0, 0.0);
+    if (!world.hit(r, 0.001, infinity, rec))
+        return background;
+    ray scattered;
+    vec3 attenuation;
+    Color emit_color = rec.mat_ptr->emitted(rec.u, rec.v, rec.pt);
+    if (!rec.mat_ptr->scatter(r, rec, attenuation, scattered))
+        return emit_color;
+    return emit_color + attenuation * (ray_color(scattered, background, world, --depth));
 }
 int main()
 {
@@ -65,22 +71,23 @@ int main()
         {
             for (int j = 0; j < image_width; j++)
             {
-                vec3 color = vec3(0.0, 0.0, 0.0);
+                Color color = Color(0.0, 0.0, 0.0);
                 for (int x = 0; x < samples_per_pixel; x++)
                 {
                     auto u = (j + random_double()) / image_width;
                     auto v = (i + random_double()) / image_height;
-                    vec3 lookfrom = vec3(13, 2, 3);
-                    vec3 lookat = Point3(0, 2, 0);
+                    vec3 lookfrom = vec3(278, 278, -800);
+                    vec3 lookat = Point3(278, 278, 0);
                     vec3 vup = vec3(0.0, 1.0, 0.0);
-                    double fov = 20;
+                    Color background = Color(0, 0, 0);
+                    double fov = 45;
                     double aperture = 0.0;
                     double focusDist = 10.0;
                     camera cam(lookfrom, lookat, vup,
                         fov, image_width, image_height,
                         aperture, focusDist,0.0,1.0);
                     ray r = cam.getRay(u, v);
-                    color += ray_color(r, world, max_depth);
+                    color += ray_color(r, background, world, max_depth);
                 }
                 color *= (1.0 / samples_per_pixel);
                 file << color;

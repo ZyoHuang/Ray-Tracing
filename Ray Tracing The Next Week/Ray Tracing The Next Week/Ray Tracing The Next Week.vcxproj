@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="aarect.h" />
     <ClInclude Include="BVH.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="dielectric.h" />

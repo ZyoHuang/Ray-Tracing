@@ -34,6 +34,7 @@ bool moving_sphere::hit(const ray& r, double t_min, double t_max, hit_recored& r
 			rec.pt = r.at(tmp);
 			auto outward_normal = (rec.pt - center(r.time())) / radius;
 			rec.set_face_normal(r, outward_normal);
+			get_sphere_uv(outward_normal, rec.u, rec.v);
 			rec.mat_ptr = mat_ptr;
 			return true;
 		}
@@ -44,6 +45,7 @@ bool moving_sphere::hit(const ray& r, double t_min, double t_max, hit_recored& r
 			rec.normal = (rec.pt - center(r.time())) / radius;
 			auto outward_normal = (rec.pt - center(r.time())) / radius;
 			rec.set_face_normal(r, outward_normal);
+			get_sphere_uv(outward_normal, rec.u, rec.v);
 			rec.mat_ptr = mat_ptr;
 			return true;
 		}

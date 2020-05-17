@@ -52,7 +52,7 @@ private:
 	double e[3];
 };
 
-using color = vec3;
+using Color = vec3;
 using Point3 = vec3;
 
 inline std::ostream& operator<<(std::ostream& os, const vec3& v) {

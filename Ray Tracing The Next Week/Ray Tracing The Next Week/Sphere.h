@@ -39,7 +39,7 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_recored& rec)cons
 			rec.normal = (rec.pt - center)/radius;
 			auto outward_normal = (rec.pt - center) / radius;
 			rec.set_face_normal(r, outward_normal);
-			get_sphere_uv((rec.pt - center) / radius, rec.u, rec.v);
+			get_sphere_uv(outward_normal, rec.u, rec.v);
 			rec.mat_ptr = mat_ptr;
 			return true;
 		}

@@ -108,3 +108,19 @@ v_{i}=1-clamp(v_{t},0.0,1.0)
 $$
 ![](img-bed/fullsizerender(1).jpg)
 
+
+
+## Rectangles and Lights
+
+### Emissive Materials
+
+发光材质
+
+
+
+### Rectangle
+
+矩形面片
+
+
+
