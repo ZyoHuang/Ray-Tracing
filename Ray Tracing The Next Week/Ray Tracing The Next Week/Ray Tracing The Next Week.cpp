@@ -14,6 +14,7 @@
 #include "BVH.h"
 #include "aarect.h"
 #include "Box.h"
+#include "Constant_medium.h"
 const int image_width = 600;
 const int image_height = 400;
 const int samples_per_pixel = 400;
@@ -36,27 +37,25 @@ hittable_list random_scene() {
     auto red = make_shared<lambertian>(make_shared<solid_color>(.65, .05, .05));
     auto white = make_shared<lambertian>(make_shared<solid_color>(.73, .73, .73));
     auto green = make_shared<lambertian>(make_shared<solid_color>(.12, .45, .15));
-    auto light = make_shared<diffuse_light>(make_shared<solid_color>(15, 15, 15));
-    //Cornell box
+    auto light = make_shared<diffuse_light>(make_shared<solid_color>(7, 7, 7));
+
     world.add(make_shared<YZ_Rect>(0, 555, 0, 555, 555, green));
     world.add(make_shared<YZ_Rect>(0, 555, 0, 555, 0, red));
-    world.add(make_shared<XZ_Rect>(213, 343, 227, 332, 554, light));
-    world.add(make_shared<XZ_Rect>(0, 555, 0, 555, 0, white));
+    world.add(make_shared<XZ_Rect>(113, 443, 127, 432, 554, light));
     world.add(make_shared<XZ_Rect>(0, 555, 0, 555, 555, white));
+    world.add(make_shared<XZ_Rect>(0, 555, 0, 555, 0, white));
     world.add(make_shared<XY_Rect>(0, 555, 0, 555, 555, white));
-    
-    //world.add(make_shared<Box>(Point3(130, 0, 65), Point3(295, 165, 230), white));
-    //world.add(make_shared<Box>(Point3(265, 0, 295), Point3(430, 330, 460), white));
 
     shared_ptr<hittable> box1 = make_shared<Box>(Point3(0, 0, 0), Point3(165, 330, 165), white);
     box1 = make_shared<Rotate_y>(box1, 15);
     box1 = make_shared<translate>(box1, vec3(265, 0, 295));
-    world.add(box1);
 
     shared_ptr<hittable> box2 = make_shared<Box>(Point3(0, 0, 0), Point3(165, 165, 165), white);
     box2 = make_shared<Rotate_y>(box2, -18);
     box2 = make_shared<translate>(box2, vec3(130, 0, 65));
-    world.add(box2);
+
+    world.add(make_shared<Constant_medium>(box1, 0.01, make_shared<solid_color>(0, 0, 0)));
+    world.add(make_shared<Constant_medium>(box2, 0.01, make_shared<solid_color>(1, 1, 1)));
     return static_cast<hittable_list>(make_shared<BVH_Node>(world,0,1));
 }
 vec3 ray_color(const ray& r,const Color& background, const hittable& world, int depth) {

@@ -155,6 +155,7 @@
     <ClInclude Include="Box.h" />
     <ClInclude Include="BVH.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="Constant_medium.h" />
     <ClInclude Include="dielectric.h" />
     <ClInclude Include="hittable.h" />
     <ClInclude Include="hittable_list.h" />

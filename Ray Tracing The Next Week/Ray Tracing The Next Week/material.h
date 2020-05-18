@@ -33,5 +33,18 @@ public:
 private:
     shared_ptr<texture> _emit;
 };
+
+class isotropic :public material {
+public:
+    isotropic(shared_ptr<texture> a):_albedo(a){}
+    virtual bool scatter(const ray& r_in, const hit_recored& rec, vec3& attenuation, ray& scattered)const {
+        scattered = ray(rec.pt, random_in_unit_sphere(), r_in.time());
+        attenuation = _albedo->value(rec.u, rec.v, rec.pt);
+        return true;    
+    }
+    
+private:
+    shared_ptr<texture> _albedo;
+};
 #endif // !MATERIAL_H
 
