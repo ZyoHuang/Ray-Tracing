@@ -22,6 +22,16 @@ public:
 			break;
 		}
 	}
+	double& operator[](int i) {
+		switch (i)
+		{
+		case 0:
+		case 1:
+		case 2:return e[i]; break;
+		default:std::cerr << "vector index error!" << std::flush;
+			break;
+		}
+	}
 	vec3& operator+=(const vec3& src) {
 		e[0] += src.e[0];
 		e[1] += src.e[1];
